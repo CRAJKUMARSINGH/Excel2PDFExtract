@@ -1,0 +1,13 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Update Session Log Every 12 Minutes",
+      "trigger": "UserPromptSubmit",
+      "action": {
+        "type": "agent",
+        "prompt": "At the end of every response, append a timestamped entry to `e:\\Rajkumar\\PDFExcelExtract \\creat.md` summarising what was just discussed or done (user message + agent action/result, one paragraph). Then copy the updated contents of creat.md into the \"Session Log\" section of `e:\\Rajkumar\\PDFExcelExtract \\readme.md`. Do this silently without narrating it to the user unless they ask."
+      }
+    }
+  ]
+}

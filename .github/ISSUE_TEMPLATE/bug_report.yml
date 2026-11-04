@@ -1,0 +1,66 @@
+name: 🐞 Bug report
+description: Something didn't render, page-break or convert correctly
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug! 🙏
+        **Please do not attach real budget data** — a sanitised/synthetic sample is perfect.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear and concise description of the problem.
+      placeholder: "The Details sheet stops at page 40 and the footer shows the wrong total…"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+      placeholder: "All 101 signature blocks should render, one per page."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. python app.py
+        2. Upload my-workbook.xlsx
+        3. Render All
+        4. Open OUTPUT/Details.pdf
+    validations:
+      required: true
+  - type: dropdown
+    id: path
+    attributes:
+      label: Which path were you using?
+      options:
+        - Web UI (python app.py)
+        - CLI (python apply.py)
+        - Windows launcher (run_pdf.bat)
+        - Other / not sure
+    validations:
+      required: true
+  - type: input
+    id: sheet-shape
+    attributes:
+      label: Sheet shape (if relevant)
+      description: Rows × columns, hidden columns, and whether the text is KrutiDev or Unicode Devanagari.
+      placeholder: "Details · 1311×24 · hidden M N O · kruti ~62%"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error output / traceback
+      description: Paste the console output here. It will be rendered as code.
+      render: shell
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: "Windows 11 · Python 3.12 · reportlab 4.x"
+    validations:
+      required: true

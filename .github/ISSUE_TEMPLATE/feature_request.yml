@@ -1,0 +1,48 @@
+name: 💡 Feature request
+description: Suggest an idea, layout preset or workflow improvement
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make printing painless! 💡
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: Describe the pain point — the "why" matters more than the "how".
+      placeholder: "Our annexure sheets are prose paragraphs, and the current grid looks wrong."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+      placeholder: "A prose layout that wraps full-width text with no grid lines."
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      placeholder: "Export to Word and format manually (slow, error-prone)."
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which area?
+      options:
+        - Layout preset / rendering theme
+        - Column & row handling
+        - KrutiDev / Devanagari text
+        - Web UI / UX
+        - CLI
+        - Docs
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Mockups, screenshots (sanitised), or links.

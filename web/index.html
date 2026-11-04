@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Excel → A4 PDF Print Studio · PWD Tools Suite</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">🏗️ <b>PWD Tools Suite</b></div>
+  <div class="initiative">✦ Initiative: Mrs. Premlata Jain, AAO, PWD Udaipur ✦</div>
+</header>
+
+<main class="wrap">
+
+  <!-- ── Screen 1 : Upload ─────────────────────────────────────────── -->
+  <section id="screen-upload" class="screen">
+    <h1 class="hero">🪔 Excel → A4 PDF <span>Print Studio</span> 🪔</h1>
+    <p class="sub">किसी भी संरचना की Excel शीट — Elegant, बटन-आधारित प्रिंट</p>
+
+    <div id="drop" class="drop">
+      <div class="drop-emoji">⬆</div>
+      <p>Drop <b>.xlsx</b> / <b>.xls</b> here</p>
+      <label class="btn btn-primary">
+        Choose Excel
+        <input id="file" type="file" accept=".xlsx,.xls" hidden>
+      </label>
+      <p class="hint" id="upload-hint">The file is copied to a scratch folder — your INPUT folder is never touched.</p>
+    </div>
+  </section>
+
+  <!-- ── Screen 2 : Sheet Board ────────────────────────────────────── -->
+  <section id="screen-board" class="screen hidden">
+    <div class="board-head">
+      <div>
+        <h2>🔍 <span id="wb-name">workbook.xlsx</span></h2>
+        <p class="sub" id="board-summary"></p>
+      </div>
+      <div class="actions">
+        <button class="btn" id="btn-save">💾 Save layouts.json</button>
+        <button class="btn" id="btn-reload">↻ Reload</button>
+        <button class="btn btn-primary" id="btn-render-all">🖨 Render All</button>
+      </div>
+    </div>
+    <div id="cards" class="cards"></div>
+  </section>
+
+</main>
+
+<!-- ── Screen 3 : Config Drawer ────────────────────────────────────── -->
+<div id="drawer" class="drawer hidden">
+  <div class="drawer-panel">
+    <div class="drawer-head">
+      <h3 id="drawer-title">Sheet</h3>
+      <div class="actions">
+        <button class="btn btn-ghost" id="btn-reset">↺ Reset</button>
+        <button class="btn btn-primary" id="btn-apply">✔ Apply</button>
+        <button class="btn btn-ghost" id="btn-close">✕</button>
+      </div>
+    </div>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="layout">Layout</button>
+      <button class="tab" data-tab="columns">Columns</button>
+      <button class="tab" data-tab="rows">Rows &amp; Breaks</button>
+      <button class="tab" data-tab="text">Language &amp; Font</button>
+    </nav>
+
+    <div class="drawer-body">
+      <!-- Layout -->
+      <div class="pane" data-pane="layout">
+        <label>Layout preset</label>
+        <select id="f-layout"></select>
+        <p class="hint" id="f-layout-desc"></p>
+
+        <div class="row">
+          <div><label>Orientation</label>
+            <select id="f-orientation">
+              <option value="landscape">Landscape</option>
+              <option value="portrait">Portrait</option>
+            </select>
+          </div>
+          <div><label>Margin (mm)</label><input id="f-margin" type="number" min="4" max="30" step="1" value="12"></div>
+          <div><label>Repeat header</label>
+            <select id="f-repeat"><option value="true">Yes</option><option value="false">No</option></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columns -->
+      <div class="pane hidden" data-pane="columns">
+        <div class="row">
+          <div><label>Column mode</label>
+            <select id="f-colmode">
+              <option value="visible">Visible (drop hidden)</option>
+              <option value="native">All columns</option>
+              <option value="explicit">Explicit list…</option>
+            </select>
+          </div>
+          <div><label>Exclude (comma)</label><input id="f-exclude" placeholder="M,N,O,S"></div>
+          <div><label>Explicit include</label><input id="f-include" placeholder="A,B,C,R"></div>
+        </div>
+        <label>Columns — click to toggle, drag to reorder</label>
+        <div id="col-chips" class="chips"></div>
+      </div>
+
+      <!-- Rows -->
+      <div class="pane hidden" data-pane="rows">
+        <div class="row">
+          <div><label>From row</label><input id="f-rowstart" type="number" min="1" value="1"></div>
+          <div><label>To row (blank = end)</label><input id="f-rowend" type="number" min="1" placeholder="end"></div>
+        </div>
+        <div class="row">
+          <div><label>Page break</label>
+            <select id="f-break">
+              <option value="signature">Per signature block</option>
+              <option value="title">Per title</option>
+              <option value="n_rows">Every N rows</option>
+              <option value="continuous">Continuous</option>
+            </select>
+          </div>
+          <div><label>N (rows per page)</label><input id="f-every" type="number" min="1" value="25"></div>
+        </div>
+      </div>
+
+      <!-- Language -->
+      <div class="pane hidden" data-pane="text">
+        <div class="row">
+          <div><label>KrutiDev conversion</label>
+            <select id="f-kruti">
+              <option value="auto">Auto (detect)</option>
+              <option value="on">On (convert all)</option>
+              <option value="off">Off (leave as-is)</option>
+            </select>
+          </div>
+          <div><label>Force-English columns</label><input id="f-force-en" placeholder="R"></div>
+          <div><label>Font</label>
+            <select id="f-font"><option value="Deva">Deva (NotoSansDevanagari)</option></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-foot">
+      <span id="drawer-status" class="hint"></span>
+      <button class="btn" id="btn-preview">👁 Preview page 1</button>
+      <button class="btn btn-primary" id="btn-render-one">🖨 Render this sheet</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Screen 4 : Preview modal ────────────────────────────────────── -->
+<div id="preview" class="drawer hidden">
+  <div class="drawer-panel preview-panel">
+    <div class="drawer-head">
+      <h3 id="preview-title">Preview</h3>
+      <div class="actions">
+        <a class="btn" id="btn-open-pdf" target="_blank" rel="noopener">⬇ Open PDF</a>
+        <button class="btn btn-ghost" id="btn-preview-close">✕</button>
+      </div>
+    </div>
+    <div class="preview-body"><img id="preview-img" alt="page 1"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
