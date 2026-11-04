@@ -1,0 +1,21 @@
+# ─────────────────────────────────────────────────────────────────────
+# Excel → A4 PDF Print Studio — Netlify front-end configuration
+#
+# Netlify hosts the static UI in web/ and reverse-proxies the Python
+# (FastAPI) API and the rendered PDFs to a long-running backend host
+# (Render / Railway / Fly.io). Netlify Functions cannot run Python, so
+# the backend cannot live here.
+#
+# One-time setup
+#   1. Deploy the backend from render.yaml and note its URL.
+#   2. Netlify → Site configuration → Environment variables
+#      add  BACKEND_URL = https://<your-backend-host>   (no trailing /)
+#   3. Redeploy.
+# ─────────────────────────────────────────────────────────────────────
+
+[build]
+  publish = "web"
+  # Netlify does not expand variables inside redirect rules, so the
+  # placeholder in web/_redirects is substituted by this build step
+  # (scripts/netlify-build.mjs via package.json).
+  command = "npm run build"

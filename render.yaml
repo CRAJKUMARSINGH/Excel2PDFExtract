@@ -1,0 +1,18 @@
+# Render Blueprint — Python (FastAPI) backend for Excel → A4 PDF Print Studio.
+# The Netlify front end proxies /api/* and /download/* here.
+#
+# Deploy: Render Dashboard → New → Blueprint → select this repository,
+# then copy the resulting service URL into the Netlify BACKEND_URL
+# environment variable.
+services:
+  - type: web
+    name: excel2pdf-backend
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/layouts
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9

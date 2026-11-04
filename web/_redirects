@@ -1,0 +1,19 @@
+# Excel → A4 PDF Print Studio — Netlify redirect rules
+# The backend-origin placeholder below is replaced at build time by
+# netlify.toml's [build] command from the BACKEND_URL environment variable.
+# Rules are evaluated top-down; the first match wins.
+
+# API + rendered PDFs → the Python (FastAPI) backend.
+# Status 200 makes these server-side proxies, so the browser stays on
+# the Netlify origin and no CORS configuration is required.
+# The trailing ! (force) applies them even if a matching file exists.
+/api/*       __BACKEND_URL__/api/:splat       200!
+/download/*  __BACKEND_URL__/download/:splat  200!
+
+# index.html loads its assets from /static/*, but the publish directory
+# is web/ — here the same files live at the site root.
+/static/*    /:splat                          200
+
+# Fallback: serve the single-page UI for any other path.
+# No ! here, so real files (style.css, app.js) are served normally.
+/*           /index.html                      200

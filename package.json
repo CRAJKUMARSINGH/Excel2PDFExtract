@@ -1,0 +1,10 @@
+{
+  "name": "excel2pdfextract",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Netlify front end for Excel → A4 PDF Print Studio: the static UI in web/ plus a reverse proxy to the Python (FastAPI) backend.",
+  "scripts": {
+    "build": "node scripts/netlify-build.mjs",
+    "dev": "netlify dev"
+  }
+}
