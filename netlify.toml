@@ -11,6 +11,10 @@
 #   2. Netlify → Site configuration → Environment variables
 #      add  BACKEND_URL = https://<your-backend-host>   (no trailing /)
 #   3. Redeploy.
+#
+# BACKEND_URL is optional for the front-end to load: without it the static
+# UI still publishes (no 404) and the /api and /download proxy rules are
+# simply omitted until the variable is set.
 # ─────────────────────────────────────────────────────────────────────
 
 [build]

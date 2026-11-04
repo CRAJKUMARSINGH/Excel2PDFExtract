@@ -4,18 +4,28 @@
 // Netlify does not expand variables inside redirect rules, so this runs as
 // the Netlify build command (see netlify.toml). Using Node instead of sed
 // keeps the substitution working on Windows as well as Netlify's builder.
+//
+// If BACKEND_URL is not configured the static UI is still published — the
+// site must never be left 404ing — and the /api + /download proxy rules are
+// dropped until a backend host is provided.
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const FILE = new URL('../web/_redirects', import.meta.url);
 const backend = process.env.BACKEND_URL;
 
-if (!backend) {
-  console.error('BACKEND_URL is not set. Add it under Netlify →');
-  console.error('Site configuration → Environment variables, then redeploy.');
-  process.exit(1);
+let text = readFileSync(FILE, 'utf8');
+
+if (backend) {
+  const origin = backend.replace(/\/+$/, ''); // tolerate a trailing slash
+  text = text.replaceAll('__BACKEND_URL__', origin);
+  console.log(`netlify-build: injected BACKEND_URL=${origin} into web/_redirects`);
+} else {
+  console.warn('netlify-build: BACKEND_URL is not set — publishing the static UI only.');
+  console.warn('netlify-build: add it under Netlify → Site configuration →');
+  console.warn('netlify-build: Environment variables, then redeploy to enable /api and /download.');
+  text = text
+    .replace(/^\/api\/\*.*\r?\n?/m, '')
+    .replace(/^\/download\/\*.*\r?\n?/m, '');
 }
 
-const origin = backend.replace(/\/+$/, ''); // tolerate a trailing slash
-const resolved = readFileSync(FILE, 'utf8').replaceAll('__BACKEND_URL__', origin);
-writeFileSync(FILE, resolved);
-console.log(`netlify-build: injected BACKEND_URL=${origin} into web/_redirects`);
+writeFileSync(FILE, text);
