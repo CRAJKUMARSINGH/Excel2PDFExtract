@@ -14,11 +14,23 @@ const $  = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
 /* ---------------------------------------------------------------- helpers */
+const API_HELP =
+  'Backend not configured — the API service is unreachable. ' +
+  'Deploy the Python backend (render.yaml), then set BACKEND_URL.';
+
 async function api(path, opts = {}) {
-  const r = await fetch(path, opts);
+  let r;
+  try {
+    r = await fetch(path, opts);
+  } catch {
+    throw new Error(API_HELP);
+  }
+  const ct = r.headers.get('content-type') || '';
+  // The static host answers unknown /api paths with its own HTML page
+  // (Netlify's 404, or the SPA fallback) — never a real API reply.
+  if (ct.includes('html')) throw new Error(API_HELP);
   if (!r.ok) throw new Error((await r.text()) || r.statusText);
-  return r.headers.get('content-type')?.includes('json') ? r.json()
-                                                         : r.text();
+  return ct.includes('json') ? r.json() : r.text();
 }
 function toast(msg, ms = 2600) {
   const t = $('#toast');

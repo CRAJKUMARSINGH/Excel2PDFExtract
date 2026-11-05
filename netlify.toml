@@ -6,15 +6,9 @@
 # (Render / Railway / Fly.io). Netlify Functions cannot run Python, so
 # the backend cannot live here.
 #
-# One-time setup
-#   1. Deploy the backend from render.yaml and note its URL.
-#   2. Netlify → Site configuration → Environment variables
-#      add  BACKEND_URL = https://<your-backend-host>   (no trailing /)
-#   3. Redeploy.
-#
-# BACKEND_URL is optional for the front-end to load: without it the static
-# UI still publishes (no 404) and the /api and /download proxy rules are
-# simply omitted until the variable is set.
+# BACKEND_URL is read by scripts/netlify-build.mjs at build time and
+# injected into web/_redirects. Without it the static UI still publishes
+# (no 404) and the /api + /download proxy rules are omitted.
 # ─────────────────────────────────────────────────────────────────────
 
 [build]
@@ -23,3 +17,6 @@
   # placeholder in web/_redirects is substituted by this build step
   # (scripts/netlify-build.mjs via package.json).
   command = "npm run build"
+
+[build.environment]
+  BACKEND_URL = "https://excel2pdf-backend.onrender.com"
