@@ -1,0 +1,22 @@
+﻿## Dryâ€‘run report
+
+### Markdown files (7)
+E:\Rajkumar\Excel2PDFExtract\CODE_OF_CONDUCT.md
+E:\Rajkumar\Excel2PDFExtract\CONTRIBUTING.md
+E:\Rajkumar\Excel2PDFExtract\creat.md
+E:\Rajkumar\Excel2PDFExtract\GITHUB_REACH_MAXIMUM.md
+E:\Rajkumar\Excel2PDFExtract\MASTER-PLAN.md
+E:\Rajkumar\Excel2PDFExtract\README.md
+E:\Rajkumar\Excel2PDFExtract\SECURITY.md
+
+### Text files (2)
+E:\Rajkumar\Excel2PDFExtract\dry_run_report.txt
+E:\Rajkumar\Excel2PDFExtract\requirements.txt
+
+### Empty directories (4)
+E:\Rajkumar\Excel2PDFExtract\_work\2ccfda24835a
+E:\Rajkumar\Excel2PDFExtract\_work\372be1a75b01
+E:\Rajkumar\Excel2PDFExtract\_work\43b191570285
+E:\Rajkumar\Excel2PDFExtract\_work\74b27acf994d
+
+### Duplicate file names (0)
